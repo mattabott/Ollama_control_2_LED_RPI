@@ -118,6 +118,44 @@ def answer_in_natural_language(question: str) -> str:
     return text
 
 
+@tool
+def turn_on_all_lights(tool_input=None) -> str:
+    """
+    Accende sia la luce rossa che la luce blu in un'unica invocazione.
+    """
+    global red_light_status, blue_light_status
+    
+    # Accende la luce rossa
+    if red_light_status == "OFF":
+        red_light_status = "ON"
+        red_line.set_value(1)
+    
+    # Accende la luce blu
+    if blue_light_status == "OFF":
+        blue_light_status = "ON"
+        blue_line.set_value(1)
+
+    return "Ho acceso tutte le luci!"
+
+@tool
+def turn_off_all_lights(tool_input=None) -> str:
+    """
+    Spegne sia la luce rossa che la luce blu in un'unica invocazione.
+    """
+    global red_light_status, blue_light_status
+    
+    # Spegne la luce rossa
+    if red_light_status == "ON":
+        red_light_status = "OFF"
+        red_line.set_value(0)
+    
+    # Spegne la luce blu
+    if blue_light_status == "ON":
+        blue_light_status = "OFF"
+        blue_line.set_value(0)
+
+    return "Ho spento tutte le luci!"
+
 
 
 #
@@ -135,6 +173,8 @@ tools_dict = {
     "turn_off_BLUE_light":turn_off_BLUE_light,
     "get_light_status": get_light_status,
     "answer_in_natural_language": answer_in_natural_language,
+    "turn_on_all_lights": turn_on_all_lights,
+    "turn_off_all_lights": turn_off_all_lights
 }
 tools = list(tools_dict.values())
 
@@ -173,6 +213,18 @@ Per spegnere la luce blu:
 Per ottenere lo stato della luce:
 {{
   "name": "get_light_status",
+  "parameters": {{}}
+}}
+
+Per accendere tutte le luci:
+{{
+  "name": "turn_on_all_lights",
+  "parameters": {{}}
+}}
+
+Per spegnere tutte le luci:
+{{
+  "name": "turn_off_all_lights",
   "parameters": {{}}
 }}
 
